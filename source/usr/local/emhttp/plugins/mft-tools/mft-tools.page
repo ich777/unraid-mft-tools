@@ -1,0 +1,47 @@
+Menu="Utilities"
+Title="Mellanox-FT"
+Icon="mft-tools.png"
+---
+<h1 style="text-align: center;"><span style="color: #800000;">Mellanox Firmware Tools</span></a></h1>
+<p style="text-align: center;">This Plugin shows information about your Mellanox Card.</p>
+<div style="width: 50%; float:left">
+    <div id="title">
+        <span class="left"></span>
+    </div>
+    <table class="settings">
+        <tr>
+            <td><b><font size="+1">Mellanox Network Card:</font></b></td>
+        </tr>
+        <tr>
+            <td>Temperature:</td>
+            <td style="color:green"><b><?=`mget_temp -d "$(/sbin/lspci -d 15b3: | cut -d ' ' -f1 | head -1)"`?>°C</b></td>
+        </tr>
+        <tr>
+            <td>Info:</td>
+            <td style="color:green"><b><?=`mstflint -d "$(/sbin/lspci -d 15b3: | cut -d ' ' -f1 | head -1)" q | tail -n +2 | sed 's/$/<br>/'`?></b></td>
+        </tr>
+    </table>
+</div>
+
+<div style="width: 50%; float:left">
+    <div id="title">
+        <span class="right"></span>
+    </div>
+    <table class="settings">
+        <tr>
+            <td><b><font size="+1">System Info</font></b></td>
+        </tr>
+        <tr>
+            <td>Unraid Version:</td>
+            <td style="color: #99cc00;"><b><?=`cat /etc/unraid-version | cut -d '"' -f2`?></b></td>
+        </tr>
+        <tr>
+            <td>Kernel:</td>
+            <td style="color: #99cc00;"><b><?=`uname -r`?></b></td>
+        </tr>
+        <tr>
+            <td>Compile Date:</td>
+            <td style="color: #99cc00;"><b><?=`uname -v | cut -d ' ' -f3-`?></b></td>
+        </tr>
+    </table>
+</div>
