@@ -45,6 +45,10 @@ This package contains the Mellanox Firmware Tools and also shows you the current
 KERNEL_V="$(uname -r)"
 PACKAGE="mfttools"
 
+if [ ! -d "&plugin;/packages/${KERNEL_V%%-*}" ]; then
+  mkdir -p "&plugin;/packages/${KERNEL_V%%-*}"
+fi
+
 download() {
 #Download MFT-Tools
 if wget -q -nc --show-progress --progress=bar:force:noscroll -O "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" "&gitURL;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" ; then
