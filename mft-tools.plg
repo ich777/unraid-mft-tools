@@ -58,10 +58,10 @@ if wget -q -nc --show-progress --progress=bar:force:noscroll -O "&plugin;/packag
     exit 1
   fi
   echo
-  echo "---------------Sucessfully downloaded Mellanox Firmwar Tools-----------------"
+  echo "---------------Sucessfully downloaded Mellanox Firmware Tools-----------------"
 else
   echo
-  echo "-------------------Can't download Mellanox Firmwar Tools---------------------"
+  echo "-------------------Can't download Mellanox Firmware Tools---------------------"
   exit 1
 fi
 }
@@ -69,26 +69,26 @@ fi
 check() {
 if [ ! -f "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" ]; then
   echo
-  echo "--------------------Downloading Mellanox Firmwar Tools----------------------"
-  echo "---------This could take some time, please don't close this window!---------"
+  echo "--------------------Downloading Mellanox Firmware Tools----------------------"
+  echo "---------This could take some time, please don't close this window!----------"
   download
 else
   echo
-  echo "--------------------Mellanox Firmwar Tools found locally--------------------"
+  echo "--------------------Mellanox Firmware Tools found locally--------------------"
 fi
 }
 
 install() {
-#Install Mellanox Firmwar Tools
+#Install Mellanox Firmware Tools
 /sbin/installpkg "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz"
 }
 
-#Check if Mellanox Firmwar Tools are allready downloaded
+#Check if Mellanox Firmware Tools are allready downloaded
 check
 install > /dev/null
 
 echo
-echo "-------------Installation of Mellanox Firmwar Tools successfull-------------"
+echo "-------------Installation of Mellanox Firmware Tools successfull-------------"
 echo
 
 </INLINE>
@@ -98,7 +98,7 @@ echo
 <INLINE>
 
 echo "----------------------------------------"
-echo "---Uninstalling Mellanox Firmwar Tools---"
+echo "---Uninstalling Mellanox Firmware Tools---"
 echo "----------------------------------------"
 # Remove plugin related files
 removepkg &name;-&version;
@@ -106,7 +106,7 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf &plugin;
 echo
 echo "----------------------------------------------------------------------------"
-echo "------Mellanox Firmwar Tools uninstalled, please reboot your server!--------"
+echo "------Mellanox Firmware Tools uninstalled, please reboot your server!-------"
 echo "----------------------------------------------------------------------------"
 echo
 
