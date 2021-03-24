@@ -104,7 +104,7 @@ check
 install > /dev/null
 
 echo
-echo "-------------Installation of Mellanox Firmware Tools successfull-------------"
+echo "-------------Installation of Mellanox Firmware Tools successful--------------"
 echo
 
 </INLINE>
