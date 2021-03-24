@@ -2,11 +2,11 @@
 <!DOCTYPE PLUGIN [
   <!ENTITY name      "mft-tools">
   <!ENTITY author    "ich777">
-  <!ENTITY version   "2020.12.10">
+  <!ENTITY version   "2021.03.24">
   <!ENTITY launch    "Settings/mft-tools">
   <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/raw/master">
   <!ENTITY pluginURL "&gitURL;/&name;.plg">
-  <!ENTITY md5       "9d52cc319b7d2190626f06ac747f509a">
+  <!ENTITY md5       "6c97bf88bb6452a724012b613636f75e">
   <!ENTITY plugin    "/boot/config/plugins/&name;">
   <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
@@ -14,6 +14,10 @@
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2021.03.24
+- Fixed permission issues
+
 ###2020.12.10
 - Fixed removal of empty downloads
 
@@ -64,10 +68,10 @@ if wget -q -nc --show-progress --progress=bar:force:noscroll -O "&plugin;/packag
     exit 1
   fi
   echo
-  echo "---------------Sucessfully downloaded Mellanox Firmware Tools-----------------"
+  echo "-------Sucessfully downloaded Mellanox Firmware Tools, please wait...!-------"
 else
   echo
-  echo "-------------------Can't download Mellanox Firmware Tools---------------------"
+  echo "-------------------Can't download Mellanox Firmware Tools--------------------"
   exit 1
 fi
 }
