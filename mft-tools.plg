@@ -2,11 +2,11 @@
 <!DOCTYPE PLUGIN [
   <!ENTITY name      "mft-tools">
   <!ENTITY author    "ich777">
-  <!ENTITY version   "2021.03.25">
-  <!ENTITY launch    "Settings/mft-tools">
+  <!ENTITY version   "2021.04.01">
+  <!ENTITY launch    "Settings/mft-tools-main">
   <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/raw/master">
   <!ENTITY pluginURL "&gitURL;/&name;.plg">
-  <!ENTITY md5       "6c97bf88bb6452a724012b613636f75e">
+  <!ENTITY md5       "c50d7332060925a0176b69001481d0b2">
   <!ENTITY plugin    "/boot/config/plugins/&name;">
   <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
@@ -14,6 +14,9 @@
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2021.04.01
+- Added Firmware flashing tutorial
 
 ###2021.03.25
 - Added wait for network and timout
