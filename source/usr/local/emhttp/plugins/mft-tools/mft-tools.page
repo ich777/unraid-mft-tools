@@ -1,9 +1,9 @@
-Menu="Utilities"
+Menu="mft-tools-main:1"
 Title="Mellanox-FT"
-Icon="mft-tools.png"
 ---
 <h1 style="text-align: center;"><span style="color: #800000;">Mellanox Firmware Tools</span></a></h1>
 <p style="text-align: center;">This Plugin shows information about your Mellanox Card.</p>
+<p style="text-align: center;">Please note that this plugin is based on the Open Source Mellanox Firmware Tools and commands can be different than in the Closed Source version (eg: 'flint' = 'mstflint').</p>
 <div style="width: 50%; float:left">
     <div id="title">
         <span class="left"></span>

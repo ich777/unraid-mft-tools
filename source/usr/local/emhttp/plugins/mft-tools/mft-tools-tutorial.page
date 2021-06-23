@@ -1,0 +1,58 @@
+Menu="mft-tools-main:2"
+Title="Flash Tutorial"
+---
+<h2 style="text-align: center;"><span style="color: #800000;">Flash Tutorial</span></h2>
+<p>Open up a terminal and do the following steps:</p>
+<ol>
+<li>Type in '<strong>mkdir -p /tmp/mellanox &amp;&amp; cd /tmp/mellanox</strong>'</li>
+<li>Download the appropriate Firmware for you card to your server to do that do the following and continue at Step2 afterwards:<br />
+<ol>
+<li>Go to the 'Download links' section below and click on the corresponding version you want to download, the OPN and PSID</li>
+<li>Right click the link for the Firmware download and select '<span class="ILfuVd"><span class="hgKElc">Copy Link Address</span></span>'</li>
+</ol>
+</li>
+<li>Go back to the Terminal and type in '<strong>wget </strong><span style="text-decoration: underline;"><em>PASTELINKFROMABOVE</em></span>' and press 'Return'</li>
+<li>Type in '<strong>unzip *.zip &amp;&amp; rm -rf *.zip</strong>'</li>
+<li>Type in: '<strong>/sbin/lspci -d 15b3:</strong>' and you should get something like:<br />'<span style="text-decoration: underline;">07:00.0</span> Ethernet controller: Mellanox Technologies MT26448 [ConnectX EN 10GigE, PCIe 2.0 5GT/s] (rev b0)'
+<ul style="list-style-type: disc;">
+<li>Note down the BUS ID - in this case: '<span style="text-decoration: underline;">07:00.0</span>'</li>
+</ul>
+</li>
+<li>To flash the Firmware type in: '<strong>mstflint -d 07:00.0 -i *.bin burn</strong>' (<span style="text-decoration: underline;">replace '07:00.0' with the device ID from the output from step 5</span>)</li>
+<li>You should be prompted if you want to continue, press 'y' and 'Return'</li>
+</ol>
+<p>This should start the flash process and should take a minute. <strong>I would strongly recommend to reboot your server after you flashed the firmware.</strong></p>
+<p><em>If you are presented with an error message see the section 'PSID Change' below.</em></p>
+<p>&nbsp;</p>
+<h3 style="text-align: center;">Removing the Boot ROM</h3>
+<p>If you don't need the Boot ROM (this enables basically Network boot) on your card and want to speed up boot times a little bit enter the following command in your terminal:</p>
+<p>'<strong>mstflint -d 07:00.0 --allow_rom_change drom</strong>' (<span style="text-decoration: underline;">replace '07:00.0' with the device ID from the output from step 5</span>)</p>
+<p>&nbsp;</p>
+<h3 style="text-align: center;">PSID Change</h3>
+<p style="text-align: center;"><span style="color: #ff0000;">(Please be aware that if you flash the wrong Firmware to your card you can brick your card! Only continue if you know what you are doing!)</span></p>
+<p>If you got a card that is IBM,... branded you have to slightly modify the command from Step 6: '<strong>mstflint -d 07:00.0 -i *.bin -allow_psid_change burn</strong>' (<span style="text-decoration: underline;">replace '07:00.0' with the device ID from the output from step 5</span>)</p>
+<p class="ipsCode">You should be prompted with a message like:</p>
+<p class="ipsCode">&nbsp;</p>
+<table style="width: 500px; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="0">
+<tbody>
+<tr>
+<td style="width: 100%;"><em>You are about to replace current PSID on flash - "IBM1080110023" with a different PSID - "MT_1080120023". Note: It is highly recommended not to change the PSID.</em></td>
+</tr>
+</tbody>
+</table>
+<p>If you want to continue, press 'y' and 'Return' to start the flash process!</p>
+<p class="ipsCode">(<strong><em><span style="text-decoration: underline;">Please note that the numbers after the letters, in this case "IBM" and "MT_", should be the same otherwise it is very likely that you have the wrong Firmware for the wrong card</span></em></strong>)</p>
+<p>&nbsp;</p>
+<h3 style="text-align: center;">Download links:</h3>
+<p>&nbsp;</p>
+<table style="width: 800px; border-collapse: collapse; margin-left: auto; margin-right: auto;" border="0">
+<tbody>
+<tr>
+<td style="width: 20%;"><a title="Firmware Download Page" href="https://www.mellanox.com/support/firmware/connectx2en" target="_blank" rel="noopener">Mellanox ConnectX-2 EN</a></td>
+<td style="width: 20%;"><a title="Firmware Download Page" href="https://www.mellanox.com/support/firmware/connectx3en" target="_blank" rel="noopener">Mellanox ConnectX-3 EN</a></td>
+<td style="width: 20%;"><a title="Firmware Download Page" href="https://www.mellanox.com/support/firmware/connectx4en" target="_blank" rel="noopener">Mellanox ConnectX-4 EN</a></td>
+<td style="width: 20%;"><a title="Firmware Download Page" href="https://www.mellanox.com/support/firmware/connectx5en" target="_blank" rel="noopener">Mellanox ConnectX-5 EN</a></td>
+<td style="width: 20%;"><a title="Firmware Download Page" href="https://www.mellanox.com/support/firmware/connectx6en" target="_blank" rel="noopener">Mellanox ConnectX-6 EN</a></td>
+</tr>
+</tbody>
+</table>
