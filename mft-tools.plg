@@ -2,11 +2,11 @@
 <!DOCTYPE PLUGIN [
   <!ENTITY name      "mft-tools">
   <!ENTITY author    "ich777">
-  <!ENTITY version   "2021.06.23">
+  <!ENTITY version   "2021.10.19">
   <!ENTITY launch    "Settings/mft-tools-main">
-  <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/raw/master">
-  <!ENTITY pluginURL "&gitURL;/&name;.plg">
-  <!ENTITY md5       "ecac851e01a08b30066ec9b374b7c0ff">
+  <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/releases/download">
+  <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/unraid-&name;/master/&name;.plg">
+  <!ENTITY md5       "7e662d823d54a61ef1662e9ba4048c61">
   <!ENTITY plugin    "/boot/config/plugins/&name;">
   <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
@@ -14,6 +14,10 @@
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2021.10.19
+- Updated mlx_temp
+- Updated plugin installation and compilation
 
 ###2021.06.23
 - Changed package download repo
@@ -41,8 +45,8 @@ rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null|grep -v '&version
 </INLINE>
 </FILE>
 
-<FILE Name="/boot/config/plugins/&name;/&name;-&version;.txz" Run="upgradepkg --install-new">
-<URL>&gitURL;/packages/&name;-&version;.txz</URL>
+<FILE Name="/boot/config/plugins/&name;/&name;-&version;.tgz" Run="upgradepkg --install-new">
+<URL>&gitURL;/&version;/&name;-&version;.tgz</URL>
 <MD5>&md5;</MD5>
 </FILE>
 
@@ -51,77 +55,6 @@ rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null|grep -v '&version
 **Mellanox Firmware Tools**
 
 This package contains the Mellanox Firmware Tools and also shows you the current temperature and other informations about your card.
-</INLINE>
-</FILE>
-
-<FILE Run="/bin/bash">
-<INLINE>
-
-KERNEL_V="$(uname -r)"
-PACKAGE="mfttools-plugin-${KERNEL_V}"
-DL_URL="https://github.com/ich777/unraid-mft-tools/releases/download/$KERNEL_V"
-
-#Wait for Network and timeout after 30 seconds
-HOST="8.8.8.8"
-for i in {1..10}; do
-  ping -c1 $HOST &amp;> /dev/null &amp;&amp; break;
-done
-
-if [ ! -d "&plugin;/packages/${KERNEL_V%%-*}" ]; then
-  mkdir -p "&plugin;/packages/${KERNEL_V%%-*}"
-fi
-
-#Check for old packages
-rm -rf $(ls -d &plugin;/packages/* | grep -v "${KERNEL_V%%-*}")
-
-download() {
-#Download MFT-Tools
-if wget -q -nc --show-progress --progress=bar:force:noscroll -O "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" "${DL_URL}/${PACKAGE}-1.txz" ; then
-  if [ "$(md5sum "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" | cut -d ' ' -f1)" != "$(wget -qO- "${DL_URL}/${PACKAGE}-1.txz.md5" | cut -d ' ' -f1)" ]; then
-    echo
-    echo "---CHECKSUM ERROR!---"
-    exit 1
-  fi
-  echo
-  echo "-------Sucessfully downloaded Mellanox Firmware Tools, please wait...!-------"
-else
-  echo
-  echo "-------------------Can't download Mellanox Firmware Tools--------------------"
-  exit 1
-fi
-}
-
-check() {
-if [ ! -f "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" ]; then
-  echo
-  echo "--------------------Downloading Mellanox Firmware Tools----------------------"
-  echo "---------This could take some time, please don't close this window!----------"
-  download
-elif [ ! -s "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz" ]; then
-  rm -rf &plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz
-  echo
-  echo "----Download is empty please contact the developer of this plugin if the-----"
-  echo "----------plugin has been already built against that Kernel version----------"
-  exit 1
-else
-  echo
-  echo "--------------------Mellanox Firmware Tools found locally--------------------"
-fi
-}
-
-install() {
-#Install Mellanox Firmware Tools
-/sbin/installpkg "&plugin;/packages/${KERNEL_V%%-*}/${PACKAGE}-1.txz"
-}
-
-#Check if Mellanox Firmware Tools are allready downloaded
-check
-install > /dev/null
-
-echo
-echo "-------------Installation of Mellanox Firmware Tools successful--------------"
-echo
-
 </INLINE>
 </FILE>
 
