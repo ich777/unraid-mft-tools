@@ -1,23 +1,26 @@
-# Create necessary directories and download source
+#Download and compile Mellanox Firmware Tools
 cd ${DATA_DIR}
 mkdir ${DATA_DIR}/mlx-v${MLX_MFT_V}
 wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DATA_DIR}/mlx-v${MLX_MFT_V}.tar.gz https://github.com/Mellanox/mstflint/releases/download/v${MLX_MFT_V}/mstflint-${MLX_MFT_V}.tar.gz
 tar -C ${DATA_DIR}/mlx-v${MLX_MFT_V} --strip-components=1 -xf ${DATA_DIR}/mlx-v${MLX_MFT_V}.tar.gz
 cd ${DATA_DIR}/mlx-v${MLX_MFT_V}
-
-# Configure and compile MFT
 ${DATA_DIR}/mlx-v${MLX_MFT_V}/configure --enable-openssl --prefix=/usr
 make -j${CPU_COUNT}
-make DESTDIR=/MFT install -j${CPU_COUNT}
+make DESTDIR=${DATA_DIR}/MFT install -j${CPU_COUNT}
 cd ${DATA_DIR}
+mkdir -p cd ${DATA_DIR}/v${MLX_MFT_V}
 
-# Download Mellanox Temperature and copy it
+#Download and move mlx_temp to destination
 wget -q -nc --show-progress --progress=bar:force:noscroll https://github.com/ich777/runtimes/raw/master/mlx/mlx_temp.zip
-unzip ${DATA_DIR}/mlx_temp.zip -d /MFT/usr/bin
+unzip ${DATA_DIR}/mlx_temp.zip -d ${DATA_DIR}/MFT/usr/bin
 
-# Create Slackware package
+#Get source package and move files to destination
+wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DATA_DIR}/sourcepackage.txz https://github.com/ich777/unraid-mft-tools/raw/master/source/sourcepackage.txz
+tar -C ${DATA_DIR}/MFT/ -xvf ${DATA_DIR}/sourcepackage.txz
+
+#Create Slackware package
 PLUGIN_NAME="mfttools"
-BASE_DIR="/MFT"
+BASE_DIR="${DATA_DIR}/MFT"
 TMP_DIR="/tmp/${PLUGIN_NAME}_"$(echo $RANDOM)""
 VERSION="$(date +'%Y.%m.%d')"
 
@@ -32,8 +35,9 @@ $PLUGIN_NAME:
 $PLUGIN_NAME: Mellanox Firmware Tools v${MLX_MFT_V}
 $PLUGIN_NAME:
 $PLUGIN_NAME:
-$PLUGIN_NAME: Custom MFT package for Unraid Kernel v${UNAME%%-*} by ich777
+$PLUGIN_NAME: Custom MFT package for Unraid by ich777
 $PLUGIN_NAME:
 EOF
-${DATA_DIR}/bzroot-extracted-$UNAME/sbin/makepkg -l n -c n $TMP_DIR/$PLUGIN_NAME-plugin-$UNAME-1.txz
-md5sum $TMP_DIR/$PLUGIN_NAME-plugin-$UNAME-1.txz | awk '{print $1}' > $TMP_DIR/$PLUGIN_NAME-plugin-$UNAME-1.txz.md5
+makepkg -l n -c n ${DATA_DIR}/v$MLX_MFT_V/${PLUGIN_NAME}-"$(date +'%Y.%m.%d')".txz
+cd ${DATA_DIR}/v$MLX_MFT_V
+md5sum ${PLUGIN_NAME}-"$(date +'%Y.%m.%d')".txz | awk '{print $1}' > ${PLUGIN_NAME}-"$(date +'%Y.%m.%d')".txz.md5
