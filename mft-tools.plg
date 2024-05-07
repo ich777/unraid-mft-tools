@@ -2,11 +2,11 @@
 <!DOCTYPE PLUGIN [
   <!ENTITY name      "mft-tools">
   <!ENTITY author    "ich777">
-  <!ENTITY version   "2023.11.08">
+  <!ENTITY version   "2024.05.07">
   <!ENTITY launch    "Settings/mft-tools-main">
   <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/releases/download">
   <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/unraid-&name;/master/&name;.plg">
-  <!ENTITY md5       "2eba5bb2d873bbf3e020af48b3fcbbe1">
+  <!ENTITY md5       "e5502322dde2bb6b91f48e68b9ae9f79">
   <!ENTITY plugin    "/boot/config/plugins/&name;">
   <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
 ]>
@@ -14,6 +14,9 @@
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2024.05.07
+- Bumped version - based on mstflint v4.28.0
 
 ###2023.11.08
 - Bumped version - based on mstflint v4.26.0
