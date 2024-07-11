@@ -1,19 +1,26 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-  <!ENTITY name      "mft-tools">
-  <!ENTITY author    "ich777">
-  <!ENTITY version   "2024.05.07">
-  <!ENTITY launch    "Settings/mft-tools-main">
-  <!ENTITY gitURL    "https://github.com/&author;/unraid-&name;/releases/download">
-  <!ENTITY pluginURL "https://raw.githubusercontent.com/&author;/unraid-&name;/master/&name;.plg">
-  <!ENTITY md5       "e5502322dde2bb6b91f48e68b9ae9f79">
-  <!ENTITY plugin    "/boot/config/plugins/&name;">
-  <!ENTITY emhttp    "/usr/local/emhttp/plugins/&name;">
+  <!ENTITY name        "mft-tools">
+  <!ENTITY author      "ich777">
+  <!ENTITY version     "2024.07.11">
+  <!ENTITY plg_pkg_v   "2024.07.11">
+  <!ENTITY md5_plg_pkg "e5502322dde2bb6b91f48e68b9ae9f79">
+  <!ENTITY mft_v       "4.28.0">
+  <!ENTITY launch      "Settings/mft-tools-main">
+  <!ENTITY gitURL      "https://github.com/&author;/unraid-&name;/releases/download">
+  <!ENTITY gitpkgURL   "https://raw.githubusercontent.com/&author;/unraid-&name;/master/packages">
+  <!ENTITY pluginURL   "https://raw.githubusercontent.com/&author;/unraid-&name;/master/&name;.plg">
+  <!ENTITY plugin      "/boot/config/plugins/&name;">
+  <!ENTITY emhttp      "/usr/local/emhttp/plugins/&name;">
 ]>
 
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2024.07.11
+- Fix for Unraid 7.0.0
+- Separate plugin package from MFT package
 
 ###2024.05.07
 - Bumped version - based on mstflint v4.28.0
@@ -59,14 +66,27 @@
 
 <FILE Run="/bin/bash">
 <INLINE>
-rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null|grep -v '&version;')
+rm -f $(ls /boot/config/plugins/&name;/&name;*.txz 2>/dev/null|grep -v '&plg_pkg_v;')
+rm -f $(ls /boot/config/plugins/&name;/mft-*-1.txz 2>/dev/null|grep -v '&mft_v;')
+rm -f $(ls /boot/config/plugins/&name;/mft-*-2.txz 2>/dev/null|grep -v '&mft_v;')
 </INLINE>
 </FILE>
 
-<FILE Name="/boot/config/plugins/&name;/&name;-&version;.txz" Run="upgradepkg --install-new">
-<URL>&gitURL;/&version;/&name;-&version;.txz</URL>
-<MD5>&md5;</MD5>
+<FILE Name="/boot/config/plugins/&name;/&name;-&plg_pkg_v;.txz" Run="upgradepkg --install-new">
+<URL>&gitURL;/&plg_pkg_v;/&name;-&plg_pkg_v;.txz</URL>
+<MD5>&md5_plg_pkg;</MD5>
 </FILE>
+
+<FILE Name="/boot/config/plugins/&name;/mft-&mft_v;-1.txz" Run="upgradepkg --install-new" Max="6.12.99">
+<URL>&gitpkgURL;/mft-&mft_v;-1.txz</URL>
+<MD5>ff9522d27cdfc7fcbe2bfccc71d74356</MD5>
+</FILE>
+
+<FILE Name="/boot/config/plugins/&name;/mft-&mft_v;-2.txz" Run="upgradepkg --install-new" Min="6.13.0">
+<URL>&gitpkgURL;/mft-&mft_v;-2.txz</URL>
+<MD5>3154ac0a7b7c7f4bb5bd2af7b733f7f3</MD5>
+</FILE>
+
 
 <FILE Name="&emhttp;/README.md">
 <INLINE>
@@ -83,7 +103,7 @@ echo "----------------------------------------"
 echo "---Uninstalling Mellanox Firmware Tools---"
 echo "----------------------------------------"
 # Remove plugin related files
-removepkg &name;-&version;
+removepkg &name;-&plg_pkg_v;
 rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf &plugin;
 echo
