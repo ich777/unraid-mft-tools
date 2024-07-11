@@ -4,7 +4,7 @@
   <!ENTITY author      "ich777">
   <!ENTITY version     "2024.07.11">
   <!ENTITY plg_pkg_v   "2024.07.11">
-  <!ENTITY md5_plg_pkg "e5502322dde2bb6b91f48e68b9ae9f79">
+  <!ENTITY md5_plg_pkg "0b338a22cdb8252a1304784028b7e962">
   <!ENTITY mft_v       "4.28.0">
   <!ENTITY launch      "Settings/mft-tools-main">
   <!ENTITY gitURL      "https://github.com/&author;/unraid-&name;/releases/download">
