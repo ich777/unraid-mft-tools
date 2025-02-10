@@ -2,10 +2,10 @@
 <!DOCTYPE PLUGIN [
   <!ENTITY name        "mft-tools">
   <!ENTITY author      "ich777">
-  <!ENTITY version     "2024.08.14">
+  <!ENTITY version     "2025.02.10">
   <!ENTITY plg_pkg_v   "2024.07.11">
   <!ENTITY md5_plg_pkg "0b338a22cdb8252a1304784028b7e962">
-  <!ENTITY mft_v       "4.29.0">
+  <!ENTITY mft_v       "4.31.0">
   <!ENTITY launch      "Settings/mft-tools-main">
   <!ENTITY gitURL      "https://github.com/&author;/unraid-&name;/releases/download">
   <!ENTITY gitpkgURL   "https://raw.githubusercontent.com/&author;/unraid-&name;/master/packages">
@@ -17,6 +17,9 @@
 <PLUGIN  name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.9.0-beta31">
 
 <CHANGES>
+
+###2025.02.10
+- Bumped version - based on mstflint v4.31.0
 
 ###2024.08.14
 - Bumped version - based on mstflint v4.29.0
@@ -82,12 +85,12 @@ rm -f $(ls /boot/config/plugins/&name;/mft-*-2.txz 2>/dev/null|grep -v '&mft_v;'
 
 <FILE Name="/boot/config/plugins/&name;/mft-&mft_v;-1.txz" Run="upgradepkg --install-new" Max="6.12.99">
 <URL>&gitpkgURL;/mft-&mft_v;-1.txz</URL>
-<MD5>00414f44005252f2d64f7057b13e0b7d</MD5>
+<MD5>c1dedbdd63259c736928b961e12c169d</MD5>
 </FILE>
 
 <FILE Name="/boot/config/plugins/&name;/mft-&mft_v;-2.txz" Run="upgradepkg --install-new" Min="6.13.0">
 <URL>&gitpkgURL;/mft-&mft_v;-2.txz</URL>
-<MD5>b350abffde8e8e334bcb1d0a360f08fe</MD5>
+<MD5>493b74c470374db6efbcd2c38e92b5c6</MD5>
 </FILE>
 
 
